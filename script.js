@@ -29,8 +29,28 @@
 
 // end REQUIREMENTS ///////////////////////////////////
 
+function searchGit(input){
+	
+	const url = `https://api.github.com/users/:${input}/repo`;
 
-const searchURL = 'https://api.github.com/users/';
+	const options = {method: 'GET',
+					headers: new Headers({
+					"Accept": "application/vnd.github.nebula-preview+json"
+	
+					})
+					};
+	
+	fetch(url, options).then(response => response.json()).then(responseJson => console.log(responseJson)).catch();
+}
 
+function displayGit(){}
 
+$("form").submit(e => {
+	e.preventDefault();
+	
+	let input = $("#js-input").val();
+	
+	console.log(input);
+	searchGit(input);
+});
 
