@@ -1,3 +1,3 @@
 # GitHubAPI
 
-Pair: Michella & Sacha
+Pair: Michaela + Sacha
