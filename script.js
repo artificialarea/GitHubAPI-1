@@ -31,7 +31,7 @@
 
 function searchGit(input){
 	
-	const url = `https://api.github.com/users/:${input}/repo`;
+	const url = `https://api.github.com/users/${input}/repos`;
 
 	const options = {method: 'GET',
 					headers: new Headers({
@@ -40,16 +40,34 @@ function searchGit(input){
 					})
 					};
 	
-	fetch(url, options).then(response => response.json()).then(responseJson => console.log(responseJson)).catch();
+	fetch(url, options)
+		.then(response => {
+		if(!response.ok){
+			throw new Error (response.status);
+		}else{
+		return response.json();
+		}
+		})
+		.then(responseJson => displayGit(responseJson))
+		.catch(err => alert("Something went wrong!"));
 }
 
-function displayGit(){}
+function displayGit(responseJson){
+	
+	console.log(responseJson);
+	
+	for(let i = 0; i < responseJson.length; i++){
+	$("ul").append(`<li><a href="${responseJson[i].html_url}" target="_blank">${responseJson[i].name}</a></li>`);
+	}
+}
+
 
 $("form").submit(e => {
 	e.preventDefault();
 	
 	let input = $("#js-input").val();
 	
+	$("ul").empty();
 	console.log(input);
 	searchGit(input);
 });
